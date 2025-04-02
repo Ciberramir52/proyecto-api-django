@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, Http404
 
 # Create your views here.
 
@@ -57,7 +56,10 @@ def get_metas(request):
     return JsonResponse(metas, safe=False)
 
 def get_meta(request, pk):
-    return
+    for meta in metas:
+        if meta['id'] == pk:
+            return JsonResponse(meta)
+    raise Http404('Not Found')
 
 def crear_meta(request):
     return
