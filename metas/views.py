@@ -1,6 +1,8 @@
 from django.http import HttpResponse, JsonResponse, Http404
 import json
 from django.views.decorators.csrf import csrf_exempt
+from .models import Metas
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -57,13 +59,16 @@ def meta_path(request, pk):
         return borrar_meta(request, pk)
     
 def get_metas(request):
+    metas = list(Metas.objects.all().values())
     return JsonResponse(metas, safe=False)
 
 def get_meta(request, pk):
-    for meta in metas:
-        if meta['id'] == pk:
-            return JsonResponse(meta)
-    raise Http404('Not Found')
+    # for meta in metas:
+    #     if meta['id'] == pk:
+    #         return JsonResponse(meta)
+    # raise Http404('Not Found')
+    meta = get_object_or_404(Metas, pk=pk)
+    return JsonResponse(meta.dict(), safe=False)
 
 def crear_meta(request):
     datos = json.loads(request.body)
