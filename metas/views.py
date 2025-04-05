@@ -78,12 +78,13 @@ def crear_meta(request):
         return JsonResponse({ 'error': 'Detalles debe ser >= 5' }, status=400)
     elif id:
         return JsonResponse({ 'error': 'Meta no debe tener id' }, status=400)
-    nueva_meta = {
-        'id': len(metas) + 1,
-        **datos
-    }
-    metas.append(datos)
-    return JsonResponse(nueva_meta, status=201)
+    # nueva_meta = {
+    #     'id': len(metas) + 1,
+    #     **datos
+    # }
+    # metas.append(datos)
+    nueva_meta = Metas.objects.create(**datos)
+    return JsonResponse(nueva_meta.dict(), status=201, safe=False)
 
 def actualizar_meta(request, pk):
     datos = json.loads(request.body)

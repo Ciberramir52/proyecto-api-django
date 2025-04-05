@@ -9,7 +9,7 @@ PERIODO = [
 ]
 
 class Metas(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     detalles = models.TextField()
     periodo = models.CharField(max_length=6, choices=PERIODO)
     eventos = models.IntegerField()
